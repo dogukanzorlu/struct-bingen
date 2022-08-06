@@ -1,0 +1,48 @@
+include_paths:
+  - "/Library/Developer/CommandLineTools/usr/lib/clang/13.1.6/include"
+  - "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
+  - "/Library/Developer/CommandLineTools/usr/include"
+  - "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"
+sys_include_paths:
+  - "/Library/Developer/CommandLineTools/usr/lib/clang/13.1.6/include"
+  - "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
+  - "/Library/Developer/CommandLineTools/usr/include"
+  - "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"
+sources:
+  - name: /Users/dogukanzorlu/Projects/go-projects/struct-bingen/testdata/dummy.h
+    value:
+  - name:
+    value: "#define __builtin_va_list void *
+#define __asm(x)
+#define __inline
+#define __inline__
+#define __signed
+#define __signed__
+#define __const const
+#define __extension__
+#define __attribute__(x)
+#define __attribute(x)
+#define __restrict
+#define __volatile__
+#define __builtin_inff() (0)
+#define __builtin_infl() (0)
+#define __builtin_inf() (0)
+#define __builtin_fabsf(x) (0)
+#define __builtin_fabsl(x) (0)
+#define __builtin_fabs(x) (0)
+#define __INTRINSIC_PROLOG(name)
+#undef __llvm__
+#undef __BLOCKS__
+#define __STDC_HOSTED__ 1
+#define __STDC_VERSION__ 199901L
+#define __STDC__ 1
+#define __GNUC__ 4
+#define __GNUC_PREREQ(maj,min) 0
+#define __POSIX_C_DEPRECATED(ver)
+#define __has_include_next(...) 1
+#define __FLT_MIN__ 0
+#define __DBL_MIN__ 0
+#define __LDBL_MIN__ 0
+void __GO__(char*, ...);
+#define __ARM_EABI__ 1
+#define __aarch64__ 1"
