@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"gopkg.in/yaml.v3"
 	"log"
 	"os"
@@ -9,11 +10,18 @@ import (
 	parser "struct-bingen/pkg/clang/parser"
 )
 
+var (
+	file string
+)
+
 func main() {
+	flag.StringVar(&file, "file", "", "target c file")
+
+	flag.Parse()
 
 	config := readYaml()
 
-	_, err := clang.Convert(config)
+	err := clang.Convert(config, file)
 	if err != nil {
 		return
 	}

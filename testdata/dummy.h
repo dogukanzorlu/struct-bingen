@@ -1,11 +1,11 @@
 struct Student {
-    char name[50];
-    int  age;
-    int  year;
+    char name[20];
+    int  *age[20];
+    int  *year;
     float gpa;
 };
 
-struct Organisation
+ struct Organisation
 {
   char organisation_name[20];
   char org_number[20];
@@ -18,6 +18,6 @@ struct Organisation
 };
 
 struct mabbas {
-  int mnum;
+  bool mnum;
   char mlet;
 };
