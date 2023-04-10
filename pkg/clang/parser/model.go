@@ -1,7 +1,6 @@
 package parser
 
 import (
-	"encoding/binary"
 	"modernc.org/cc/v3"
 )
 
@@ -9,7 +8,7 @@ func NewABI(c Config) cc.ABI {
 	intSize := c.IntSize
 	ptrSize := c.PtrSize
 	return cc.ABI{
-		ByteOrder: binary.BigEndian,
+		ByteOrder: c.EndianType,
 		Types: map[cc.Kind]cc.ABIType{
 			cc.Bool:      {1, 1, 1},
 			cc.Char:      {1, 1, 1},

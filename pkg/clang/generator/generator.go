@@ -1,24 +1,32 @@
 package generator
 
 import (
-	"fmt"
+	"bytes"
+	"go/ast"
 	"go/format"
+	"go/token"
 	"io/ioutil"
-	"struct-bingen/pkg/clang/translator"
 )
 
-func New(st []translator.StructType, file string) {
+func New(st []ast.Decl, file string) error {
 
-	stToString := "package main;"
-	for _, structType := range st {
-		stIdent := fmt.Sprintf("type %s struct {", structType.Ident)
-		for _, elem := range structType.Elems {
-			stIdent += fmt.Sprintf("%s %s;", elem.Ident, elem.Type)
-		}
-		stToString += stIdent + "};"
+	bbuf := bytes.NewBuffer(nil)
+	err := format.Node(bbuf, token.NewFileSet(), &ast.File{Decls: st, Name: &ast.Ident{Name: "cpu"}})
+	if err != nil {
+		return err
+	}
+	if err != nil {
+		return err
 	}
 
-	fmtdata, err := format.Source([]byte(stToString))
-	fmt.Println(err)
-	_ = ioutil.WriteFile("/Users/dogukanzorlu/Projects/go-projects/struct-bingen/testdata/dummy.go", fmtdata, 0644)
+	source, err := format.Source(bbuf.Bytes())
+	if err != nil {
+		return err
+	}
+	errs := ioutil.WriteFile(file, source, 0644)
+	if err != nil {
+		return errs
+	}
+
+	return nil
 }

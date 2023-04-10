@@ -2,29 +2,35 @@ package main
 
 import (
 	"flag"
-	"gopkg.in/yaml.v3"
+	"gopkg.in/yaml.v2"
 	"log"
 	"os"
 	"struct-bingen/pkg/clang"
 	_ "struct-bingen/pkg/clang"
-	parser "struct-bingen/pkg/clang/parser"
+	"struct-bingen/pkg/clang/parser"
 )
 
 var (
 	file string
 )
 
-func main() {
-	flag.StringVar(&file, "file", "", "target c file")
+var (
+	source string
+	target string
+)
 
+func main() {
+	flag.StringVar(&source, "source", "", "source file for c binding")
+	flag.StringVar(&target, "target", "", "target file for will be generate go file")
 	flag.Parse()
 
-	config := readYaml()
+	yamlCfg := readYaml()
 
-	err := clang.Convert(config, file)
+	err := clang.Convert(yamlCfg, source, target)
 	if err != nil {
-		return
+		os.Exit(1)
 	}
+
 }
 
 func readYaml() parser.PreProcessConfig {

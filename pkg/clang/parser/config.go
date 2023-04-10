@@ -1,48 +1,51 @@
 package parser
 
 import (
-	"os"
+	"encoding/binary"
+	"runtime"
 	"unsafe"
 )
 
-// Config64 returns a default types config for 64 bit systems.
+type Config struct {
+	PtrSize    int
+	IntSize    int
+	EndianType binary.ByteOrder
+}
+
 func Config64() Config {
-	c := Config{PtrSize: 8, IntSize: 8}
-	c.setDefaults()
+	c := Config{}
+	c.setSize()
+	c.setEndian()
 	return c
 }
 
-// Config stores configuration for base types.
-type Config struct {
-	PtrSize     int  // size of pointers in bytes
-	IntSize     int  // default int size in bytes
-	WCharSize   int  // wchar_t size
-	WCharSigned bool // is wchar_t signed?
-	UseGoInt    bool // use Go int for C int and long
+func (c *Config) setSize() {
+	switch runtime.GOARCH {
+	case "386":
+		c.PtrSize = 4
+		c.IntSize = 4
+	case "arm64":
+		c.PtrSize = 4
+		c.IntSize = 4
+	case "amd64":
+		c.PtrSize = 8
+		c.IntSize = 8
+	default:
+		c.PtrSize = int(unsafe.Sizeof((*int)(nil)))
+		c.IntSize = int(unsafe.Sizeof(int(0)))
+	}
 }
 
-func (c *Config) setDefaults() {
-	if c.WCharSize == 0 {
-		c.WCharSize = 2
-	}
-	if c.PtrSize == 0 {
-		switch os.Getenv("GOARCH") {
-		case "386":
-			c.PtrSize = 4
-		case "amd64":
-			c.PtrSize = 8
-		default:
-			c.PtrSize = int(unsafe.Sizeof((*int)(nil)))
-		}
-	}
-	if c.IntSize == 0 {
-		switch os.Getenv("GOARCH") {
-		case "386":
-			c.IntSize = 4
-		case "amd64":
-			c.IntSize = 8
-		default:
-			c.IntSize = int(unsafe.Sizeof(int(0)))
-		}
+func (c *Config) setEndian() {
+	buf := [2]byte{}
+	*(*uint16)(unsafe.Pointer(&buf[0])) = uint16(0xABCD)
+
+	switch buf {
+	case [2]byte{0xCD, 0xAB}:
+		c.EndianType = binary.LittleEndian
+	case [2]byte{0xAB, 0xCD}:
+		c.EndianType = binary.BigEndian
+	default:
+		panic("Could not determine native endianness.")
 	}
 }

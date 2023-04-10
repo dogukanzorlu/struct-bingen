@@ -7,9 +7,8 @@ import (
 	"struct-bingen/pkg/clang/translator"
 )
 
-func Convert(cfg parser.PreProcessConfig, file string) error {
-
-	unit, err := parser.Parse(cfg, file)
+func Convert(cfg parser.PreProcessConfig, source, target string) error {
+	unit, err := parser.Parse(cfg, source)
 	if err != nil {
 		fmt.Println(err)
 		return err
@@ -19,7 +18,9 @@ func Convert(cfg parser.PreProcessConfig, file string) error {
 	if len(structs) == 0 {
 		panic("Translate Error, no struct or struct could not be defined\n")
 	}
-	generator.New(structs, file)
+	//output := render.AsCode(structs)
+	//fmt.Println(output)
+	generator.New(structs, target)
 
 	return nil
 }

@@ -4,11 +4,6 @@ import (
 	"modernc.org/cc/v3"
 )
 
-var (
-	tokLBrace = cc.String("(")
-	tokRBrace = cc.String(")")
-)
-
 type PreProcessConfig struct {
 	IncludePaths    []string `yaml:"include_paths"`
 	SysIncludePaths []string `yaml:"sys_include_paths"`
@@ -17,7 +12,6 @@ type PreProcessConfig struct {
 
 func Parse(cfg PreProcessConfig, file string) (*cc.AST, error) {
 
-	// Using standard parser config as context
 	var ccConfig cc.Config
 
 	cfg64 := Config64()

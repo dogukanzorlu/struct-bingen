@@ -31,7 +31,7 @@ func UintT(size int) reflect.Kind {
 	case 8:
 		return uint64Type
 	default:
-		//panic("undefined uint type")
+		panic("undefined uint type")
 	}
 	return uint64Type
 }
@@ -47,7 +47,7 @@ func IntT(size int) reflect.Kind {
 	case 8:
 		return int64Type
 	default:
-		//panic("undefined int type")
+		panic("undefined int type")
 	}
 	return int64Type
 }
