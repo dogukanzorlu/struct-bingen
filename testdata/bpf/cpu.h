@@ -1,5 +1,5 @@
 #include <stdbool.h>
-#include "/Users/dogukanzorlu/Projects/go-projects/struct-bingen/testdata/bpf/basic_types.h"
+#include "basic_types.h"
 
 // Number of frames to walk per tail call iteration.
 #define MAX_STACK_DEPTH_PER_PROGRAM 15
