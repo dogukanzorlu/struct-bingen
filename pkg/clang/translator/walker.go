@@ -6,16 +6,6 @@ import (
 	"modernc.org/cc/v3"
 )
 
-type StructType struct {
-	Ident string
-	Elems []StructElem
-}
-
-type StructElem struct {
-	Ident string
-	Type  string
-}
-
 func walkDecl(d *cc.Declaration) []ast.Spec {
 	spec := d.DeclarationSpecifiers
 	if spec.Case == cc.DeclarationSpecifiersStorage &&

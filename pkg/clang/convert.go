@@ -20,7 +20,11 @@ func Convert(cfg parser.PreProcessConfig, source, target string) error {
 	}
 	//output := render.AsCode(structs)
 	//fmt.Println(output)
-	generator.New(structs, target)
+	err = generator.New(structs, target)
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
 
 	return nil
 }

@@ -6,15 +6,18 @@ import (
 	"go/format"
 	"go/token"
 	"io/ioutil"
+	"path/filepath"
+	"strings"
 )
 
 func New(st []ast.Decl, file string) error {
 
 	bbuf := bytes.NewBuffer(nil)
-	err := format.Node(bbuf, token.NewFileSet(), &ast.File{Decls: st, Name: &ast.Ident{Name: "cpu"}})
-	if err != nil {
-		return err
-	}
+	fset := token.NewFileSet()
+
+	p, err := filepath.Abs(file)
+	pkgName := strings.Trim(filepath.Base(p), ".go")
+	err = format.Node(bbuf, fset, &ast.File{Decls: st, Name: &ast.Ident{Name: pkgName}})
 	if err != nil {
 		return err
 	}
